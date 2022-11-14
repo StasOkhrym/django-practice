@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+  <h1>
+    Tag: {{ tag.name }}
+    <a href="{% url 'todo_list:tag-delete' pk=tag.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'todo_list:tag-update' pk=tag.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <hr>
+  <ul>
+    {% if tasks %}
+    <h2>
+      Tasks related to this tag:
+    </h2>
+    {% for task in tasks %}
+      <a href="{% url 'todo_list:task-detail' pk=task.id %}" class="list-group-item list-group-item-action list-group-item-secondary">{{ task.name }}</a>
+    {% endfor %}
+    {% else %}
+    <h2> There are no tasks related to this tag.</h2>
+  </ul>
+{% endblock %}

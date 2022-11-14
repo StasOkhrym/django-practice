@@ -4,7 +4,7 @@
     <h1>
     Tags list
     <span class="float-right">
-      <a href="{% url 'task_manager:task-type-create' %}" class="btn btn-primary link-to-page">
+      <a href="{% url 'todo_list:tag-create' %}" class="btn btn-primary link-to-page">
        Create
       </a>
     </span>
@@ -13,6 +13,7 @@
   {% include "includes/search_form.html" %}
   {% endblock %}
 
-
+  {% if tag_list %}
+  {% endif %}
 
 {% endblock %}
