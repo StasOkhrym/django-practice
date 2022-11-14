@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Tag: {{ tag.name }}
+    <a href="{% url 'todo_list:tag-delete' pk=tag.id %}" class="btn btn-danger link-to-page float-right ml-1">
+      Delete
+    </a>
+
+    <a href="{% url 'todo_list:tag-update' pk=tag.id %}" class="btn btn-secondary link-to-page float-right">
+      Update
+    </a>
+  </h1>
+  <hr>
+  <ul>
+    {% if tasks %}
+    <h3>
+      Tasks related to this tag:
+    </h3>
+      <br>
+    {% for task in tasks %}
+      <a href="{% url 'todo_list:task-detail' pk=task.id %}" class="list-group-item list-group-item-action list-group-item-secondary">{{ task.content }}</a>
+    {% endfor %}
+    {% else %}
+    <h3> There are no tasks related to this tag.</h3>
+    {% endif %}
+  </ul>
+{% endblock %}

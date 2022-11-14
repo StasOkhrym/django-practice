@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Task: {{ task.content }}
+    <a href="{% url 'todo_list:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'todo_list:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+    {% if task.is_completed %}
+    <a href="{% url 'todo_list:toggle-task-state' pk=task.id %}" class="btn btn-danger link-to-page">
+      Mark as not completed
+    </a>
+    {% elif not task.is_completed %}
+      <a href="{% url 'todo_list:toggle-task-state' pk=task.id %}" class="btn btn-success link-to-page">
+        Mark as completed
+      </a>
+    {% endif %}
+  </h1>
+  <hr>
+  {% if task.is_completed %}
+    <p>This task is completed!</p>
+  {% else %}
+    <p>This task is not done yet!</p>
+  {% endif %}
+  <hr>
+  {% if task.tags %}
+    <h4>Related tags for this task:</h4>
+    {% for tag in task.tags.all %}
+      <a href="{% url 'todo_list:tag-detail' pk=task.id %}" class="list-group-item list-group-item-action list-group-item-secondary">{{ tag.name }}</a>
+    {% endfor %}
+  {% else%}
+    <h4>There are no related tags for this task.</h4>
+  {% endif %}
+{% endblock %}
