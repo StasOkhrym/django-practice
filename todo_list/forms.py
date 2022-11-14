@@ -25,9 +25,7 @@ class TagSearchForm(forms.Form):
 class TaskForm(forms.ModelForm):
     deadline = forms.SplitDateTimeField()
     tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=False
+        queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple, required=False
     )
 
     class Meta:

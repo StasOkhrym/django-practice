@@ -8,9 +8,7 @@ from todo_list.models import Task, Tag
 class TagTests(TestCase):
     def test_create_tag(self):
         form_data = {"name": "tests"}
-        response = self.client.post(
-            reverse("todo_list:tag-create"), data=form_data
-        )
+        response = self.client.post(reverse("todo_list:tag-create"), data=form_data)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Tag.objects.get(id=1).name, "tests")
@@ -29,9 +27,7 @@ class TagTests(TestCase):
     def test_delete_tag(self):
         Tag.objects.create(name="tests")
 
-        response = self.client.post(
-            reverse("todo_list:tag-delete", args=[1])
-        )
+        response = self.client.post(reverse("todo_list:tag-delete", args=[1]))
 
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Tag.objects.filter(id=1).exists())
@@ -40,15 +36,10 @@ class TagTests(TestCase):
         Tag.objects.create(name="tests")
         Tag.objects.create(name="name")
         Tag.objects.create(name="super_name")
-        response = self.client.get(
-            reverse("todo_list:tag-list") + "?name=me"
-        )
+        response = self.client.get(reverse("todo_list:tag-list") + "?name=me")
         tags = Tag.objects.filter(name__icontains="me")
 
-        self.assertEqual(
-            list(response.context["tag_list"]),
-            list(tags)
-        )
+        self.assertEqual(list(response.context["tag_list"]), list(tags))
         self.assertEqual(Tag.objects.count(), 3)
         self.assertEqual(len(tags), 2)
 
@@ -64,9 +55,7 @@ class TaskTests(TestCase):
             deadline=datetime.datetime.now(),
         )
 
-        response = self.client.post(
-            reverse("todo_list:task-delete", args=[1])
-        )
+        response = self.client.post(reverse("todo_list:task-delete", args=[1]))
 
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Task.objects.filter(id=1).exists())
@@ -87,14 +76,9 @@ class TaskTests(TestCase):
             is_completed=False,
             deadline=datetime.datetime.now(),
         )
-        response = self.client.get(
-            reverse("todo_list:task-list") + "?content=me"
-        )
+        response = self.client.get(reverse("todo_list:task-list") + "?content=me")
         tasks = Task.objects.filter(content__icontains="me")
 
-        self.assertEqual(
-            list(response.context["task_list"]),
-            list(tasks)
-        )
+        self.assertEqual(list(response.context["task_list"]), list(tasks))
         self.assertEqual(Task.objects.count(), 3)
         self.assertEqual(len(tasks), 2)

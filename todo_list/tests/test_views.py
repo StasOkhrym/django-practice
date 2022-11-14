@@ -70,4 +70,3 @@ class PublicTests(TestCase):
         task.refresh_from_db()
         self.assertEqual(response_remove.status_code, 302)
         self.assertEqual(task.is_completed, False)
-
