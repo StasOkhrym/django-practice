@@ -95,15 +95,20 @@ class TagDetailView(generic.DetailView):
 class TagCreateView(generic.CreateView):
     model = Tag
     fields = "__all__"
+    success_url = reverse_lazy("todo_list:tag-list")
 
 
 class TagUpdateView(generic.UpdateView):
     model = Tag
     fields = "__all__"
 
+    def get_success_url(self):
+        return reverse_lazy("todo_list:tag-detail", args=[self.object.pk])
+
 
 class TagDeleteView(generic.DeleteView):
     model = Tag
+    success_url = reverse_lazy("todo_list:tag-list")
 
 
 def toggle_task_state(request, pk):
