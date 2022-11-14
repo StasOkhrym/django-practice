@@ -1,23 +1,22 @@
 from django.db.models.functions import datetime
 from django.test import TestCase
 from django.urls import reverse
-from unittest import mock
 
 from todo_list.models import Task, Tag
 
 
 class TagTests(TestCase):
     def test_create_tag(self):
-        form_data = {"name": "test"}
+        form_data = {"name": "tests"}
         response = self.client.post(
             reverse("todo_list:tag-create"), data=form_data
         )
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(Tag.objects.get(id=1).name, "test")
+        self.assertEqual(Tag.objects.get(id=1).name, "tests")
 
     def test_update_tag(self):
-        tag = Tag.objects.create(name="test")
+        tag = Tag.objects.create(name="tests")
         form_data = {"name": "new_test"}
 
         response = self.client.post(
@@ -28,7 +27,7 @@ class TagTests(TestCase):
         self.assertEqual(tag.name, "new_test")
 
     def test_delete_tag(self):
-        Tag.objects.create(name="test")
+        Tag.objects.create(name="tests")
 
         response = self.client.post(
             reverse("todo_list:tag-delete", args=[1])
@@ -38,7 +37,7 @@ class TagTests(TestCase):
         self.assertFalse(Tag.objects.filter(id=1).exists())
 
     def test_search_tag(self):
-        Tag.objects.create(name="test")
+        Tag.objects.create(name="tests")
         Tag.objects.create(name="name")
         Tag.objects.create(name="super_name")
         response = self.client.get(
@@ -56,7 +55,7 @@ class TagTests(TestCase):
 
 class TaskTests(TestCase):
     def setUp(self) -> None:
-        self.tag = Tag.objects.create(name="test")
+        self.tag = Tag.objects.create(name="tests")
 
     def test_delete_task(self):
         Task.objects.create(

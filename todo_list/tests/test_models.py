@@ -13,9 +13,9 @@ class ModelTests(TestCase):
 
     def test_task_str(self):
         task = Task.objects.create(
-            content="test",
+            content="tests",
             is_completed=False,
             deadline=datetime.datetime.now(),
         )
 
-        self.assertEqual(str(task), "test")
+        self.assertEqual(str(task), "tests")
