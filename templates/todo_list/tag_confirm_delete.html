@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Delete {tag.name} tag?</h1>
+  <h1>Delete {{ tag.name }} tag?</h1>
   <i>All information related to this tag will be lost!</i>
   <form action="" method="post">
     {% csrf_token %}
