@@ -2,7 +2,7 @@
 
 {% block content %}
   <h1>
-    {{ task.name }}
+    Task: {{ task.content }}
     <a href="{% url 'todo_list:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
       Delete
     </a>
@@ -20,7 +20,7 @@
       </a>
     {% endif %}
   </h1>
-
+  <hr>
   {% if task.is_completed %}
     <p>This task is completed!</p>
   {% else %}

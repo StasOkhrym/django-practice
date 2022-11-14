@@ -13,7 +13,10 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField()
     is_completed = models.BooleanField()
-    tags = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag, related_name="tasks")
+
+    class Meta:
+        ordering = ("-created_at",)
 
     def __str__(self) -> str:
         return self.content
