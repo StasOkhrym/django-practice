@@ -1,4 +1,45 @@
 {% extends "base.html" %}
+    <h1>
+      Task List
+      <span class="float-right">
+        <a href="" class="btn btn-primary link-to-page">
+          <i class="bi bi-plus-lg"></i> Create
+        </a>
+      </span>
+    </h1>
+    <span class="float-right">
+    <a href="" class="btn btn-secondary link-to-page">
+      Show all task types
+    </a>
+  </span>
+  {% block search_form %}
+  {% include "includes/search_form.html" %}
+  {% endblock %}
+  <br>
 
 {% block content %}
+  {% if task_list %}
+    <table class="table table-hover">
+      <tr>
+        <th>ID</th>
+        <th>Content</th>
+        <th>Created at</th>
+        <th>Deadline</th>
+        <th>Tags</th>
+      </tr>
+      {% for task in task_list %}
+          <tr class="table-danger" onclick="window.location='{% url "todo_list:toggle-task-state" pk=task.id%}'">
+            <td>{{ task.id }}</td>
+            <td>{{ task.content }}</td>
+            <td>{{ task.created_at | date:"d M Y" }}</td>
+            <td>{{ task.deadline | date:"d M Y" }}</td>
+            <td>{{ task.tags }}</td>
+            {% if task.is_completed %} <span class="btn btn-success disabled float-right"><i class="bi bi-check"></i> Task is done</span>{% endif %}</td>
+          </tr>
+      {% endfor %}
+
+  </table>
+  {% else %}
+    <p>There are no tasks to do.</p>
+  {% endif %}
 {% endblock %}
