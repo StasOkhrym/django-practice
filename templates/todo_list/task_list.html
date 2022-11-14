@@ -26,7 +26,7 @@
         <th></th>
       </tr>
       {% for task in task_list %}
-          <tr class="table-light" onclick="window.location='{% url "todo_list:task-detail" pk=task.id%}'">
+          <tr class="table-secondary" onclick="window.location='{% url "todo_list:task-detail" pk=task.id%}'">
             <td>{{ task.id }}</td>
             <td>{{ task.content }}</td>
             <td>{{ task.created_at | date:"d M Y" }}</td>

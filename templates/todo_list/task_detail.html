@@ -26,4 +26,13 @@
   {% else %}
     <p>This task is not done yet!</p>
   {% endif %}
+  <hr>
+  {% if task.tags %}
+    <h4>Related tags for this task:</h4>
+    {% for tag in task.tags.all %}
+      <a href="{% url 'todo_list:tag-detail' pk=task.id %}" class="list-group-item list-group-item-action list-group-item-secondary">{{ tag.name }}</a>
+    {% endfor %}
+  {% else%}
+    <h4>There are no related tags for this task.</h4>
+  {% endif %}
 {% endblock %}

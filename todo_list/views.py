@@ -15,7 +15,7 @@ class TaskListView(generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TaskListView, self).get_context_data(**kwargs)
 
-        content = self.request.GET.get("name", "")
+        content = self.request.GET.get("content", "")
         not_completed = self.request.GET.get("not_completed", "")
 
         context["search_form"] = TaskSearchForm(
@@ -67,9 +67,7 @@ class TagListView(generic.ListView):
 
         name = self.request.GET.get("name", "")
 
-        context["search_form"] = TagSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = TagSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
@@ -77,9 +75,7 @@ class TagListView(generic.ListView):
 
         if form.is_valid():
             if form.cleaned_data["name"]:
-                return self.queryset.filter(
-                    name__icontains=form.cleaned_data["name"]
-                )
+                return self.queryset.filter(name__icontains=form.cleaned_data["name"])
             return self.queryset
 
 
@@ -90,7 +86,8 @@ class TagDetailView(generic.DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TagDetailView, self).get_context_data(**kwargs)
 
-        tasks = Task.objects.filter(tags_id=self.object.pk)
+        tag = Tag.objects.get(id=self.kwargs["pk"])
+        tasks = Task.objects.filter(tags__id=tag.id)
         context["tasks"] = tasks
         return context
 
@@ -117,5 +114,3 @@ def toggle_task_state(request, pk):
         task.is_completed = False
     task.save()
     return HttpResponseRedirect(reverse_lazy("todo_list:task-detail", args=[pk]))
-
-

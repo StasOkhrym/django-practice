@@ -18,14 +18,12 @@ class TagSearchForm(forms.Form):
         max_length=255,
         required=False,
         label="",
-        widget=forms.TextInput(attrs={"placeholder": "Search by name"})
+        widget=forms.TextInput(attrs={"placeholder": "Search by name"}),
     )
 
 
 class TaskForm(forms.ModelForm):
-    deadline = forms.DateField(
-        widget=forms.SelectDateWidget()
-    )
+    deadline = forms.DateField(widget=forms.SelectDateWidget())
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple,
