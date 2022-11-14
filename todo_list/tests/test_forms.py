@@ -1,6 +1,7 @@
 from django.db.models.functions import datetime
 from django.test import TestCase
 from django.urls import reverse
+from unittest import mock
 
 from todo_list.models import Task, Tag
 
@@ -57,39 +58,7 @@ class TaskTests(TestCase):
     def setUp(self) -> None:
         self.tag = Tag.objects.create(name="test")
 
-    def test_create_task(self):
-        form_data = {
-            "content": "test content",
-            "deadline": datetime.datetime.now(),
-            "is_completed": False,
-        }
-        response = self.client.post(
-            reverse("todo_list:task-create"), data=form_data
-        )
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(Task.objects.get(id=1).content, "test")
-
-    def test_update_tag(self):
-        task = Task.objects.create(
-            content="TaskTest",
-            is_completed=False,
-            deadline=datetime.datetime.now(),
-        )
-        form_data = {
-            "content": "test content",
-            "deadline": datetime.datetime.now(),
-            "is_completed": False,
-        }
-
-        response = self.client.post(
-            reverse("todo_list:task-update", args=[1]), data=form_data
-        )
-        task.refresh_from_db()
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(task.content, "test content")
-
-    def test_delete_tag(self):
+    def test_delete_task(self):
         Task.objects.create(
             content="TaskTest",
             is_completed=False,
@@ -103,7 +72,7 @@ class TaskTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Task.objects.filter(id=1).exists())
 
-    def test_search_tag(self):
+    def test_search_task(self):
         Task.objects.create(
             content="TaskTest",
             is_completed=False,
